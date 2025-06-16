@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UVCE Mini LLM</title>
+  <style>
+    body { font-family: sans-serif; background: #121212; color: #eee; padding: 30px; }
+    h1 { color: #2ee7ff; }
+    input, button { padding: 10px; font-size: 1em; width: 100%; margin: 10px 0; }
+    textarea { width: 100%; height: 150px; padding: 10px; background: #1e1e1e; color: #eee; border: none; }
+  </style>
+</head>
+<body>
+  <h1>💬 Ask UVCE Mini LLM</h1>
+  <form method="POST">
+    <input type="text" name="question" placeholder="Ask something about UVCE..." required>
+    <button type="submit">Ask</button>
+  </form>
+  {% if answer %}
+    <h2>📚 Answer:</h2>
+    <textarea readonly>{{ answer }}</textarea>
+  {% endif %}
+</body>
+</html>

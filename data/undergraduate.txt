@@ -1,0 +1,10 @@
+UG Courses
+As per Engineering Seats Government Notification No : ED 169 TEC 2022, Bangalore Dated : 01/10/2022
+1	Mechanical Engineering	
+2	Civil Engineering	
+3	Electrical and Electronics Engineering	
+4   Electronics and Communication Engineering	
+5	Artificial Intelligence and Machine Learning	
+6	Computer Science and Engineering	
+7	Information Science and Engineering	
+8	Architecture	

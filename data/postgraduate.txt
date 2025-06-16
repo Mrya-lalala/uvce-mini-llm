@@ -1,0 +1,36 @@
+PG Courses
+
+==Mechanical Engineering==
+Machine Design
+Manufacturing Science Engineering
+Thermal Science Engineering
+Advanced Material Technology
+
+==Civil Engineering==
+Construction Engineering
+Geo-Technical Technology
+Structural Engineering
+Highway Engineering
+Pre-Stresses Concrete
+Water Resources Engineering
+Environmental Engineering
+Earthquake Engineering
+
+==Electrical Engineering==
+Power and Energy Systems
+Power Electronics
+Control and Instrumentation
+
+==Electronics Engineering==
+Electronics and Communication
+
+==Computer Science Engineering==
+Information Technology
+Software Engineering
+Computer Networking
+Web Technologies
+Bioinformatics
+
+==Architecture==
+Landscape Architecture
+Construction and Project Management
