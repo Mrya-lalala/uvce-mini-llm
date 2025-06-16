@@ -1,33 +1,37 @@
 import os
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-from llama_index.core import Settings
 from flask import Flask, request, render_template
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, ServiceContext
+from dotenv import load_dotenv
+from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.together import TogetherLLM
-import os
-from dotenv import load_dotenv
 
-# Load API key
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 load_dotenv()
-api_key = os.getenv("TOGETHER_API_KEY")
-
-# Setup embedding + LLM
-embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
-llm = TogetherLLM(model="meta-llama/Llama-3-8b-chat-hf", api_key=api_key)
-Settings.llm = llm
-Settings.embed_model = embed_model
-
-# Load docs + index
-documents = SimpleDirectoryReader("data").load_data()
-index = VectorStoreIndex.from_documents(documents)
-query_engine = index.as_query_engine()
 
 # Setup Flask
 app = Flask(__name__)
 
+# Load API key
+api_key = os.getenv("TOGETHER_API_KEY")
+
+# Global query engine (we'll lazily initialize it)
+query_engine = None
+
+def initialize_index():
+    global query_engine
+    if query_engine is None:
+        embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
+        llm = TogetherLLM(model="meta-llama/Llama-3-8b-chat-hf", api_key=api_key)
+        Settings.llm = llm
+        Settings.embed_model = embed_model
+
+        documents = SimpleDirectoryReader("data").load_data()
+        index = VectorStoreIndex.from_documents(documents)
+        query_engine = index.as_query_engine()
+
 @app.route("/", methods=["GET", "POST"])
 def chat():
+    initialize_index()
     answer = ""
     if request.method == "POST":
         question = request.form["question"]
@@ -36,5 +40,5 @@ def chat():
     return render_template("index.html", answer=answer)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Render uses PORT
-    app.run(debug=True, host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host="0.0.0.0", port=port)
